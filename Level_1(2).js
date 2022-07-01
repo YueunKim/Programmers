@@ -181,3 +181,36 @@ function solution(lottos, win_nums) {
   }
   return answer;
 }
+
+//신고 결과 받기
+function solution(id_list, report, k) {
+  var report_arr = [];
+  var answer = [];
+  //메일 받을 횟수가 들어갈 배열
+  for (let i = 0; i < id_list.length; i++){
+      answer.push(0);
+  }
+  //중복제거
+  let report1 = [...new Set(report)];
+  //각 요소를 배열 형태로
+  for (let text of report1){
+      report_arr.push(text.split(' '));
+  }
+  for (let i = 0; i < id_list.length; i++){
+      let count = 0;
+      //신고받았으면 +1
+      for (let j = 0; j < report_arr.length; j++){
+          if (id_list[i] === report_arr[j][1]) count++;
+      }
+      //신고를 총 k번 이상 받았을 때만 신고자의 메일 횟수 +1
+      if (count >= k) {
+          for (let s = 0; s < report_arr.length; s++){
+              if (id_list[i] === report_arr[s][1]){
+                  answer[id_list.indexOf(report_arr[s][0])]++;
+          }
+        }
+      }
+  }
+  return answer;
+}
+
